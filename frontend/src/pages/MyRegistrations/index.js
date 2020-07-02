@@ -1,6 +1,8 @@
 import React, {useState, useEffect} from 'react'
 import moment from 'moment'
 import api from '../../services/api'
+import { Button, ButtonGroup} from 'reactstrap';
+import './style.css'
 
 export default function MyRegistrations(){
     const[myEvents, setMyEvents] = useState([])
@@ -23,17 +25,56 @@ export default function MyRegistrations(){
 
     }
 
+    
+
+    const acceptEventHandler = async (eventId)=>{
+        try{
+        const response = await api.post(`/registration/${eventId}/approvals`, {}, { headers: { user } })
+        getMyEvents()
+        
+        } catch(err){ 
+            console.log(err)
+        }
+    }
+    const rejectEventHandler = async (eventId)=>{
+        try{
+        const response = await api.post(`/registration/${eventId}/rejections`, {}, { headers: { user } })
+        getMyEvents()
+        
+        
+        } catch(err){ 
+            console.log(err)
+        }
+    }
+
+
+
+
+
+    const isApproved = (approved) => approved == true ? "Approved" : "Rejected"
+
+    
+
     return(
            <ul className="events">
                {myEvents.map(event =>(
                    <li key={event._id}>
-                       <div>Title: {event.eventTitle}</div>
+                       <div><strong>Title: {event.eventTitle}</strong></div>
                        <div className="event-details">
                             <span>Event Date: {moment(event.eventDate).format('l')}</span>
                            <span>Event Price: ${parseFloat(event.eventPrice).toFixed(2)}</span>
                            <span>User Email: {event.userEmail}</span>
-                           <span>Status: {event.approved}</span>
+                           <span>Status: 
+                                <span className={event.approved !== undefined ? isApproved(event.approved): "Pending"}> {event.approved !== undefined ? isApproved(event.approved): "Pending"} </span>
+
+                           </span>
+                           
                        </div>
+                       <ButtonGroup>
+
+                                <Button disabled={event.approved==true || event.approved==false ? true:false}color="secondary" onClick={()=>acceptEventHandler(event._id)}>Accept</Button>
+                                <Button disabled={event.approved==true || event.approved==false ? true:false}color="danger" onClick={() => rejectEventHandler(event._id)}>Reject</Button>
+                        </ButtonGroup>
                    </li>
                ))}
 
