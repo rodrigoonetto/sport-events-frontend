@@ -25,7 +25,7 @@ module.exports = {
 				registration.eventPrice = registration.event.price
 				registration.eventDate = registration.event.date
 				registration.userEmail = registration.user.email
-				registration.save()
+				registration.save() 
 
 				console.log(registration)
 
