@@ -9,7 +9,7 @@ module.exports = {
 				res.statusCode(401)
 			} else {
 				const { title, description, price, sport, date } = req.body
-				const { filename } = req.file
+				const { location } = req.file
 
 				const user = await User.findById(authData.user._id)
 

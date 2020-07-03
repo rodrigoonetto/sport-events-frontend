@@ -12,7 +12,8 @@ const RejectionController = require('./controllers/RejectionController')
 const uploadConfig = require('./config/upload')
 
 const routes = express.Router()
-const upload = multer(uploadConfig)
+//const upload = multer(uploadConfig)
+constuploadToS3 = require('./config/s3upload')
 
 routes.get('/status', (req, res) => {
 	res.send({ status: 200 })
@@ -34,8 +35,9 @@ routes.get('/dashboard', verifyToken, DashboardController.getAllEvents)
 routes.get('/user/events', verifyToken, DashboardController.getEventsByUserId)
 routes.get('/event/:eventId', verifyToken, DashboardController.getEventById)
 
+
 //Events
-routes.post('/event', verifyToken, upload.single('thumbnail'), EventController.createEvent)
+routes.post('/event', verifyToken, uploadToS3.single('thumbnail'), EventController.createEvent)
 routes.delete('/event/:eventId', verifyToken, EventController.delete)
 
 //User
