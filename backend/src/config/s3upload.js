@@ -2,11 +2,14 @@ const aws = require('aws-sdk')
 const multers3 = require('multer-s3')
 const multer = require('multer')
 const path = require('path')
+require('dotenv').config()
 
-const s3 = new aws.s3({
+const s3 = new aws.S3({
     accessKeyId: process.env.ACCESS_KEY_ID,
     secretAccessKey: process.env.SECRET_ACCESS_KEY
 })
+
+
 
 module.exports = multer({
     storage: multers3({

@@ -24,7 +24,7 @@ module.exports = {
 						sport,
 						price: parseFloat(price),
 						user: authData.user._id,
-						thumbnail: filename,
+						thumbnail: location,
 						date
 					})
 

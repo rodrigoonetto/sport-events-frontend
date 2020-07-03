@@ -13,7 +13,7 @@ const uploadConfig = require('./config/upload')
 
 const routes = express.Router()
 //const upload = multer(uploadConfig)
-constuploadToS3 = require('./config/s3upload')
+const uploadToS3 = require('./config/s3upload')
 
 routes.get('/status', (req, res) => {
 	res.send({ status: 200 })
